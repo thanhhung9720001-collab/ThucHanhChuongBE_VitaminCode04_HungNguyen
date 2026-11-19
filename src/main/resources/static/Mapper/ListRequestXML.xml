@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.vitamincode_pratice.mapper.ListRequestMapper">
+    <resultMap id="ListRequestMapper" type="ListRequestEntity">
+        <id column="request_id" property="id"/>
+        <result column="question" property="question"/>
+        <result column="status" property="status"/>
+        
+        <association property="user_profile" javaType="org.example.vitamincode_pratice.entity.UserProfileEntity">
+            <id column="user_id" property="id"/>
+            <result column="username" property="username"/>
+            <result column="email" property="email"/>
+
+            <association property="role" javaType="org.example.vitamincode_pratice.entity.RoleEntity">
+                <id column="role_id" property="id"/>
+                <result column="role_name" property="role_name"/>
+                <result column="description" property="description"/>
+            </association>
+        </association>
+    </resultMap>
+
+    <select id="getListRequests" resultMap="ListRequestMapper">
+        SELECT
+        lr.id AS request_id,
+        lr.question,
+        lr.status,
+        us.id AS user_id,
+        us.username,
+        us.email,
+        r.id AS role_id,
+        r.role_name,
+        r.description
+        FROM list_request lr
+        LEFT OUTER JOIN user_profile us ON lr.user_profile_id = us.id
+        left outer join role r on r.id = us.role_id
+    </select>
+
+    <insert id="insertRequest" parameterType="org.example.vitamincode_pratice.entity.UserProfileEntity">
+        INSERT INTO list_request (username, email, question, status, user_profile_id)
+        SELECT username, email, #{question}, #{status}, user_profile.id
+        FROM user_profile
+        WHERE id = #{user_profile.id}
+    </insert>
+
+    <update id="updateRequest">
+        UPDATE list_request
+        SET  question = #{question}
+        where id = #{id} and user_profile_id = #{user_profile.id}
+    </update>
+
+    <delete id="deleteRequest">
+        DELETE
+        FROM list_request
+        WHERE id = #{id};
+    </delete>
+</mapper>

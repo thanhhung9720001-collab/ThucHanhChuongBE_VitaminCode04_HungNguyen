@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.example.vitamincode_pratice.mapper.UserProfileMapper">
+    <resultMap id="UserProfileMapper" type="UserProfileEntity">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="email" property="email"/>
+
+        <association property="role" javaType="org.example.vitamincode_pratice.entity.RoleEntity">
+            <id column="role_id" property="id"/>
+            <result column="role_name" property="role_name"/>
+            <result column="description" property="description"/>
+        </association>
+
+    </resultMap>
+    <select id="getAllUserProfiles" resultMap="UserProfileMapper">
+        SELECT
+            us.id,
+            us.username,
+            us.email,
+            us.role_id,
+            r.id as role_id,
+            r.role_name,
+            r.description
+        FROM user_profile us
+        LEFT JOIN role r on r.id = us.role_id
+        ORDER BY us.id;
+    </select>
+
+    <insert id="insertUserProfile" parameterType="org.example.vitamincode_pratice.entity.UserProfileEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user_profile (username, email, role_id)
+        VALUES (#{username}, #{email}, #{role.id})
+    </insert>
+
+    <update id="updateUserProfile">
+        UPDATE user_profile SET username = #{username}, email = #{email}, role_id = #{role.id}
+        WHERE id = #{id}
+    </update>
+
+    <delete id="deleteUserProfile">
+        DELETE
+        FROM user_profile
+        WHERE id = #{id};
+    </delete>
+</mapper>
