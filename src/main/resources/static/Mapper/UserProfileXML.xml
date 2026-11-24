@@ -27,6 +27,20 @@
         ORDER BY us.id;
     </select>
 
+    <select id="selectUserByName" resultMap="UserProfileMapper">
+        SELECT
+            us.id,
+            us.username,
+            us.email,
+            r.id as role_id,
+            r.role_name,
+            r.description
+        FROM user_profile us
+        LEFT OUTER JOIN role r on r.id = us.role_id
+        WHERE us.username LIKE CONCAT('%', #{userName}, '%')
+        ORDER BY us.id;
+    </select>
+
     <insert id="insertUserProfile" parameterType="org.example.vitamincode_pratice.entity.UserProfileEntity" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO user_profile (username, email, role_id)
         VALUES (#{username}, #{email}, #{role.id})

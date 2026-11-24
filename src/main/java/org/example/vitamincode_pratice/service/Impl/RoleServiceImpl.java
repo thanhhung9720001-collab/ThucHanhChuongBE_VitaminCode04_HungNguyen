@@ -18,6 +18,13 @@ public class RoleServiceImpl implements RoleService {
         return roleMapper.selectAllRoles();
     }
 
+    public List<RoleEntity> getRoleByName(String roleName) {
+        if(roleName == null) {
+            throw new RuntimeException("Role name is null");
+        }
+        return roleMapper.selectRoleByName(roleName);
+    }
+
     public RoleEntity insertRole(RoleEntity roleEntity) {
         int result = roleMapper.insertRole(roleEntity);
         if(result > 0) {

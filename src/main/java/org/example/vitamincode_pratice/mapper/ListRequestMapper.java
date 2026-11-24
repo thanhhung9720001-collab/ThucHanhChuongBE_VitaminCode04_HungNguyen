@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface ListRequestMapper {
     List<ListRequestEntity>  getListRequests();
+    List<ListRequestEntity> selectRequestByUserAndContent(@Param("userName") String userName,@Param("content") String content);
     int insertRequest(ListRequestEntity requestEntity);
     int updateRequest(ListRequestEntity requestEntity);
     int deleteRequest(@Param("id") int requestId);

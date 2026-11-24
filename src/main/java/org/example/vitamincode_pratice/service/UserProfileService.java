@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface UserProfileService {
     List<UserProfileEntity> getAllUserProfiles();
+    List<UserProfileEntity> getUserByName(String userName);
     UserProfileEntity insertUserProfile(UserProfileEntity userProfileEntity);
     UserProfileEntity updateUserProfile(UserProfileEntity userProfileEntity);
     int deleteUserProfile(int userProfileId);

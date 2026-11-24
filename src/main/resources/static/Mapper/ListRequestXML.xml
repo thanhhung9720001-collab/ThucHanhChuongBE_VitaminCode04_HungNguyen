@@ -35,6 +35,21 @@
         left outer join role r on r.id = us.role_id
     </select>
 
+    <select id="selectRequestByUserAndContent" resultMap="ListRequestMapper">
+        SELECT
+            lr.id,
+            lr.username,
+            lr.email,
+            lr.question,
+            lr.user_profile_id,
+            lr.status
+        FROM list_request lr
+        WHERE
+            lr.username LIKE CONCAT('%', #{userName}, '%') OR
+            lr.question LIKE CONCAT('%', #{content}, '%')
+        ORDER BY lr.id;
+    </select>
+
     <insert id="insertRequest" parameterType="org.example.vitamincode_pratice.entity.UserProfileEntity">
         INSERT INTO list_request (username, email, question, status, user_profile_id)
         SELECT username, email, #{question}, #{status}, user_profile.id

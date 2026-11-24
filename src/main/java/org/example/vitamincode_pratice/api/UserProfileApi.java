@@ -23,6 +23,11 @@ public class UserProfileApi {
         return ResponseEntity.ok(userProfileService.getAllUserProfiles());
     }
 
+    @GetMapping("/users/{userName}")
+    public  ResponseEntity<List<UserProfileEntity>> getUserByName(@PathVariable("userName") String userName) {
+        return ResponseEntity.ok(userProfileService.getUserByName(userName));
+    }
+
     @PostMapping("/users")
     public ResponseEntity<UserProfileEntity> insertUserProfile(@RequestBody UserProfileEntity userProfileEntity) {
         UserProfileEntity savedUserProfile = userProfileService.insertUserProfile(userProfileEntity);

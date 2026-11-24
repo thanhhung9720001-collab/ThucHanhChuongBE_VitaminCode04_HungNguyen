@@ -20,6 +20,13 @@ public class UserProfileImpl implements UserProfileService {
         return userProfileMapper.getAllUserProfiles();
     }
 
+    public List<UserProfileEntity> getUserByName(String userName) {
+        if(userName==null){
+            throw new RuntimeException("userName is null");
+        }
+        return userProfileMapper.selectUserByName(userName);
+    }
+
     public  UserProfileEntity insertUserProfile(UserProfileEntity userProfileEntity) {
         int result = userProfileMapper.insertUserProfile(userProfileEntity);
         if (result > 0) {

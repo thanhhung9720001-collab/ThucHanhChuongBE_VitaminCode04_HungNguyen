@@ -2,6 +2,7 @@ package org.example.vitamincode_pratice.api;
 
 
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.jdbc.Null;
 import org.example.vitamincode_pratice.entity.RoleEntity;
 import org.example.vitamincode_pratice.service.RoleService;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,11 @@ public class RoleApi {
     @GetMapping("/roles")
     public ResponseEntity<List<RoleEntity>> getAllRoles() {
         return ResponseEntity.ok(roleService.getAllRoles());
+    }
+
+    @GetMapping("/roles/{roleName}")
+    public ResponseEntity<List<RoleEntity>> getRoleByName(@PathVariable ("roleName") String roleName) {
+        return ResponseEntity.ok(roleService.getRoleByName(roleName));
     }
 
     @PostMapping("/roles")

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.vitamincode_pratice.entity.ListRequestEntity;
 import org.example.vitamincode_pratice.mapper.ListRequestMapper;
 import org.example.vitamincode_pratice.service.ListRequestService;
+import org.hibernate.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +22,14 @@ public class ListRequestApi {
     @GetMapping("/list-request")
     public ResponseEntity<List<ListRequestEntity>> getListRequests() {
         return ResponseEntity.ok(listRequestService.getListRequests());
+    }
+
+    @GetMapping("/list-request/search")
+    public ResponseEntity<List<ListRequestEntity>> getListRequestsByNameAndConten(
+            @RequestParam String userName,
+            @RequestParam String content
+    ){
+        return ResponseEntity.ok(listRequestService.getListRequestsByNameAndConten(userName, content));
     }
 
     @PostMapping("/list-request")

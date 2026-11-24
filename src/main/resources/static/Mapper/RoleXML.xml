@@ -15,6 +15,19 @@
         FROM role r;
     </select>
 
+    <select id="selectRoleByName" resultMap="Role">
+        SELECT
+            r.id,
+            r.role_name,
+            r.description,
+            r.created_day,
+            r.created_by,
+            r.updated_day,
+            r.updated_by
+        FROM role r
+        WHERE r.role_name LIKE CONCAT('%', #{roleName}, '%')
+    </select>
+
     <insert id="insertRole" parameterType="org.example.vitamincode_pratice.entity.RoleEntity" useGeneratedKeys="true" keyProperty="id" >
         INSERT INTO role(role_name, description)
         VALUES (#{role_name}, #{description})

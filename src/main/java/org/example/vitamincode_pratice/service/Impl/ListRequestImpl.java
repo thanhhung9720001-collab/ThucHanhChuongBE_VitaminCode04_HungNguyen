@@ -20,6 +20,14 @@ public class ListRequestImpl implements ListRequestService {
         return listRequestMapper.getListRequests();
     }
 
+    public List<ListRequestEntity> getListRequestsByNameAndConten(String userName, String content){
+        if(userName==null || content==null) {
+            throw new RuntimeException("Không tìm thây yêu cầu");
+        }
+        return listRequestMapper.selectRequestByUserAndContent(userName, content);
+
+    }
+
     public ListRequestEntity insertRequest(ListRequestEntity request){
         int result = listRequestMapper.insertRequest(request);
         if (result > 0) {

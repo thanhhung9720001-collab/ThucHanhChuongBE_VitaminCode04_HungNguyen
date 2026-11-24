@@ -9,6 +9,7 @@ import java.util.List;
 @Mapper
 public interface UserProfileMapper {
     List<UserProfileEntity> getAllUserProfiles();
+    List<UserProfileEntity> selectUserByName(@Param("userName") String userName);
     int insertUserProfile(UserProfileEntity userProfileEntity);
     int updateUserProfile(UserProfileEntity userProfileEntity);
     int deleteUserProfile(@Param("id") int userProfileId);
